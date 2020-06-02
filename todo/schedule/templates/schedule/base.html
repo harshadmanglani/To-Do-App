@@ -71,11 +71,18 @@
 		border-color: #e59400;
 	}
 
+  .hello-msg{
+    font-size: 25px;
+    color: 	#4B0082;
+    margin-right: 20px;
+  }
+
 </style>
 
 <div class="center-column">
-
-	<form method="POST" action="/">
+	<span class="hello-msg">{{ request.user }}'s TO-DO List</span>
+	<span><a href="{% url 'logout' %}">Logout</a></span>
+	<form method="POST" action="{% url 'base' %}">
 		{% csrf_token %}
 		{{form.title}}
 		<input class="btn btn-info" type="submit" name="Create Task">

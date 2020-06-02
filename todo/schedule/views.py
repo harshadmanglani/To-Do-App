@@ -52,14 +52,26 @@ def register(request):
 @login_required(login_url='login')
 def base(request):
 
-    tasks = Task.objects.all()
+    user = request.user
+    tasks = Task.objects.filter(task_user=user)
+    # tasks = Task.objects.all()
     form = TaskForm()
 
     if request.method == 'POST':
-        form = TaskForm(request.POST)
-        if form.is_valid():
-            form.save()
+        print(request.POST)
+        print(request.user)
+        print(request.POST['title'])
+
+        task = Task(task_user=request.user, title=request.POST['title'])
+        if task is not None:
+            task.save()
             return redirect('base')
+
+        # form = TaskForm(request.POST)
+        # print(form.is_valid())
+        # if form.is_valid():
+        #     form.save()
+        #     return redirect('base')
 
     context = {
         'tasks':tasks,

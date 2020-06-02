@@ -58,10 +58,6 @@ def base(request):
     form = TaskForm()
 
     if request.method == 'POST':
-        print(request.POST)
-        print(request.user)
-        print(request.POST['title'])
-
         task = Task(task_user=request.user, title=request.POST['title'])
         if task is not None:
             task.save()
